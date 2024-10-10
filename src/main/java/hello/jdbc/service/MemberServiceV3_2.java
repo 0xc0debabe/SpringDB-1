@@ -15,7 +15,6 @@ import java.sql.SQLException;
 @Slf4j
 public class MemberServiceV3_2 {
 
-//    private final PlatformTransactionManager transactionManager;
     private final TransactionTemplate txTemplate;
     private final MemberRepositoryV3 memberRepository;
 
@@ -40,17 +39,6 @@ public class MemberServiceV3_2 {
         memberRepository.update(fromId, fromMember.getMoney() - money);
         validation(toMember);
         memberRepository.update(toId, toMember.getMoney() + money);
-    }
-
-    private static void release(Connection con) {
-        if (con != null) {
-            try {
-                con.setAutoCommit(true);
-                con.close();
-            } catch (Exception e) {
-                log.info("error", e);
-            }
-        }
     }
 
     private static void validation(Member toMember) {
